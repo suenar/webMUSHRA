@@ -50,6 +50,18 @@ pages:
                 C1: configs/resources/audio/mono_c1.wav
                 C2: configs/resources/audio/mono_c2.wav
                 C3: configs/resources/audio/mono_c3.wav
+        - type: mushra
+            id: trial_random_3
+            name: MUSHRA - Random 3
+            content: Test Z
+            enableLooping: true 
+            reference: configs/resources/audio/mono_ref.wav
+            createAnchor35: false
+            createAnchor70: false
+            stimuli:
+                C1: configs/resources/audio/mono_c1.wav
+                C2: configs/resources/audio/mono_c2.wav
+                C3: configs/resources/audio/mono_c3.wav
     - type: finish
       name: Thank you
       content: Thank you for attending our test!
