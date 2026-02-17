@@ -14,42 +14,42 @@ pages:
     - type: mushra
       id: trial1
       name: MUSHRA
-      content: This training shows how to use our user interface. Please perform the underlined instructions to proceed with the training session. Reminder: In a MUSHRA listening test you are asked to rate the Basic Audio Quality (BAQ) of each condition.<br/>Basic Audio Quality is a single and global attribute that is used to judge any and all detected differences between the reference and the condition.
+      content: VIOLIN-VALLE test training page.
       showWaveform: true
       enableLooping: true 
-      reference: configs/resources/audio/mono_ref.wav
+      reference: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
       createAnchor35: true
       createAnchor70: true
       stimuli:
-          C1: configs/resources/audio/mono_c1.wav
-          C2: configs/resources/audio/mono_c2.wav
-          C3: configs/resources/audio/mono_c3.wav
+          C1: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
+          C2: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
+          C3: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
     - 
           - random
           - type: mushra
             id: trial_random_1
             name: MUSHRA - Random 2
-            content: Due to randomization, this page will be either the second MUSHRA page or the third MUSHRA page.
+            content: Test X
             enableLooping: true 
-            reference: configs/resources/audio/mono_ref.wav
+            reference: configs/resources/audio/step_00162000_stage0_nar1_generated.wav
             createAnchor35: false
             createAnchor70: false
             stimuli:
-                C1: configs/resources/audio/mono_c1.wav
-                C2: configs/resources/audio/mono_c2.wav
-                C3: configs/resources/audio/mono_c3.wav          
+                C1: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
+                C2: configs/resources/audio/step_00092000_stage0_nar1_groundtruth.wav
+                C3: configs/resources/audio/step_00162000_stage0_nar1_generated.wav
           - type: mushra
             id: trial_random_2
             name: MUSHRA - Random 1
-            content: Due to randomization, this page will be either the second MUSHRA page or the third MUSHRA page.
+            content: Test Y
             enableLooping: true 
-            reference: configs/resources/audio/mono_ref.wav
+            reference: configs/resources/audio/top1_code83_concatenated.wav
             createAnchor35: false
             createAnchor70: false
             stimuli:
-                C1: configs/resources/audio/mono_c1.wav
-                C2: configs/resources/audio/mono_c2.wav
-                C3: configs/resources/audio/mono_c3.wav          
+                C1: configs/resources/audio/top1_code83_concatenated.wav
+                C2: configs/resources/audio/top2_code617_concatenated.wav
+                C3: configs/resources/audio/top3_code289_concatenated.wav
     - type: finish
       name: Thank you
       content: Thank you for attending!
@@ -59,19 +59,19 @@ pages:
           - type: text
             label: eMail
             name: email
-          - type: number
-            label: Age
-            name: age
-            min: 0
-            max: 100
-            default: 30
-          - type: likert
-            name: gender
-            label: Gender
-            response:
-             - value: female
-               label: Female
-             - value: male
-               label: Male
-             - value: other
-               label: Other
+          # - type: number
+          #   label: Age
+          #   name: age
+          #   min: 0
+          #   max: 100
+          #   default: 30
+          # - type: likert
+          #   name: gender
+          #   label: Gender
+          #   response:
+          #    - value: female
+          #      label: Female
+          #    - value: male
+          #      label: Male
+          #    - value: other
+          #      label: Other
