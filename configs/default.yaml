@@ -63,7 +63,7 @@ pages:
                 C2: configs/resources/audio/mono_c2.wav
                 C3: configs/resources/audio/mono_c3.wav
     - type: finish
-      name: Thank you
+      name: Finish!
       content: Thank you for attending our test!
       showResults: true
       writeResults: true
