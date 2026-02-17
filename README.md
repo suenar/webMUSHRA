@@ -14,6 +14,8 @@ Listening tests are widely used to assess the quality of audio systems. In the l
 
 ##### [View Demo](https://audiolabs.github.io/webMUSHRA)
 
+###
+Can be deployed on Github Pages without PHP support. To collect results, you can combine it with Google Forms.
 
 ### Download
 
