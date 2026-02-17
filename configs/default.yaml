@@ -17,13 +17,13 @@ pages:
       content: VIOLIN-VALLE test training page.
       showWaveform: true
       enableLooping: true 
-      reference: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
+      reference: configs/resources/audio/prompt_legato.wav
       createAnchor35: true
       createAnchor70: true
       stimuli:
-          C1: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
-          C2: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
-          C3: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
+          C1: configs/resources/audio/prompt_legato.wav
+          C2: configs/resources/audio/prompt_pizz.wav
+          C3: configs/resources/audio/prompt_harmonic.wav
     - 
           - random
           - type: mushra
@@ -31,25 +31,25 @@ pages:
             name: MUSHRA - Random 2
             content: Test X
             enableLooping: true 
-            reference: configs/resources/audio/step_00162000_stage0_nar1_generated.wav
+            reference: configs/resources/audio/prompt_harmonic.wav
             createAnchor35: false
             createAnchor70: false
             stimuli:
-                C1: configs/resources/audio/step_00092000_stage0_nar1_generated.wav
-                C2: configs/resources/audio/step_00092000_stage0_nar1_groundtruth.wav
-                C3: configs/resources/audio/step_00162000_stage0_nar1_generated.wav
+                C1: configs/resources/audio/prompt_harmonic.wav
+                C2: configs/resources/audio/prompt_pizz.wav
+                C3: configs/resources/audio/prompt_legato.wav
           - type: mushra
             id: trial_random_2
             name: MUSHRA - Random 1
             content: Test Y
             enableLooping: true 
-            reference: configs/resources/audio/top1_code83_concatenated.wav
+            reference: configs/resources/audio/prompt_pizz.wav
             createAnchor35: false
             createAnchor70: false
             stimuli:
-                C1: configs/resources/audio/top1_code83_concatenated.wav
-                C2: configs/resources/audio/top2_code617_concatenated.wav
-                C3: configs/resources/audio/top3_code289_concatenated.wav
+                C1: configs/resources/audio/prompt_pizz.wav
+                C2: configs/resources/audio/prompt_harmonic.wav
+                C3: configs/resources/audio/prompt_legato.wav
     - type: finish
       name: Thank you
       content: Thank you for attending!
