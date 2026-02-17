@@ -52,7 +52,7 @@ pages:
                 C3: configs/resources/audio/prompt_legato.wav
     - type: finish
       name: Thank you
-      content: Thank you for attending!
+      content: Thank you for attending our test!
       showResults: true
       writeResults: true
       questionnaire:
