@@ -10,7 +10,7 @@ pages:
     - type: generic
       id: first_page
       name: Welcome
-      content: Welcome to webMUSHRA!       
+      content: Welcome to VIOLIN-VALLE MUSHRA!       
     - type: mushra
       id: trial1
       name: MUSHRA
