@@ -17,13 +17,13 @@ pages:
       content: VIOLIN-VALLE test training page.
       showWaveform: true
       enableLooping: true 
-      reference: configs/resources/audio/prompt_legato.wav
+      reference: configs/resources/audio/mono_ref.wav
       createAnchor35: true
       createAnchor70: true
       stimuli:
-          C1: configs/resources/audio/prompt_legato.wav
-          C2: configs/resources/audio/prompt_pizz.wav
-          C3: configs/resources/audio/prompt_harmonic.wav
+          C1: configs/resources/audio/mono_c1.wav
+          C2: configs/resources/audio/mono_cw.wav
+          C3: configs/resources/audio/mono_c3.wav
     - 
           - random
           - type: mushra
@@ -31,25 +31,25 @@ pages:
             name: MUSHRA - Random 2
             content: Test X
             enableLooping: true 
-            reference: configs/resources/audio/prompt_harmonic.wav
+            reference: configs/resources/audio/mono_ref.wav
             createAnchor35: false
             createAnchor70: false
             stimuli:
-                C1: configs/resources/audio/prompt_harmonic.wav
-                C2: configs/resources/audio/prompt_pizz.wav
-                C3: configs/resources/audio/prompt_legato.wav
+                C1: configs/resources/audio/mono_c1.wav
+                C2: configs/resources/audio/mono_c2.wav
+                C3: configs/resources/audio/mono_c3.wav
           - type: mushra
             id: trial_random_2
             name: MUSHRA - Random 1
             content: Test Y
             enableLooping: true 
-            reference: configs/resources/audio/prompt_pizz.wav
+            reference: configs/resources/audio/mono_ref.wav
             createAnchor35: false
             createAnchor70: false
             stimuli:
-                C1: configs/resources/audio/prompt_pizz.wav
-                C2: configs/resources/audio/prompt_harmonic.wav
-                C3: configs/resources/audio/prompt_legato.wav
+                C1: configs/resources/audio/mono_c1.wav
+                C2: configs/resources/audio/mono_c2.wav
+                C3: configs/resources/audio/mono_c3.wav
     - type: finish
       name: Thank you
       content: Thank you for attending our test!
