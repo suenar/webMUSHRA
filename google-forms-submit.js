@@ -8,7 +8,7 @@
     // CONFIGURATION - CHANGE THESE VALUES
     // ========================================
     var GOOGLE_FORM_ID = '1FAIpQLScW0skfGpSb7ZIH-DTBlvYP0qQZ9oYU0hNZiShQbnJYcs2j6A';
-    var GOOGLE_FORM_ENTRY_ID = 'entry.XXXXXXXXX';  // REPLACE THIS with your entry ID
+    var GOOGLE_FORM_ENTRY_ID = 'entry.1260314240';  // REPLACE THIS with your entry ID
     // ========================================
     
     var GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/' + GOOGLE_FORM_ID + '/formResponse';
