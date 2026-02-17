@@ -5,13 +5,6 @@
 //   1. Set ENTRY_ID to your Google Form entry ID (see below)
 //   2. Make sure index.html has this before </body>:
 //        <script src="google-forms-submit.js"></script>
-//
-// HOW TO FIND YOUR ENTRY ID:
-//   - Open your Google Form in edit mode
-//   - Click ⋮ → "Get pre-filled link"
-//   - Type anything in the field, click "Get link"
-//   - The URL will contain  ?entry.XXXXXXXXX=...
-//   - Copy that  entry.XXXXXXXXX  value
 // ============================================================
 
 (function () {
