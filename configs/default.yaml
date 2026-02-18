@@ -19,7 +19,7 @@ pages:
       enableLooping: true 
       reference: configs/resources/audio/mono_ref.wav
       createAnchor35: true
-      createAnchor70: true
+      createAnchor70: false
       stimuli:
           C1: configs/resources/audio/mono_c1.wav
           C2: configs/resources/audio/mono_c2.wav
@@ -29,27 +29,29 @@ pages:
           - type: mushra
             id: trial_random_1
             name: MUSHRA - Random 2
-            content: Due to randomization, this page will be either the second MUSHRA page or the third MUSHRA page.
+            content: Testing
             enableLooping: true 
             reference: configs/resources/audio/mono_ref.wav
-            createAnchor35: false
+            createAnchor35: true
             createAnchor70: false
             stimuli:
                 C1: configs/resources/audio/mono_c1.wav
                 C2: configs/resources/audio/mono_c2.wav
-                C3: configs/resources/audio/mono_c3.wav          
+                C3: configs/resources/audio/mono_c3.wav    
+                C4: configs/resources/audio/mono_c3.wav
           - type: mushra
             id: trial_random_2
             name: MUSHRA - Random 1
-            content: Due to randomization, this page will be either the second MUSHRA page or the third MUSHRA page.
+            content: Testing
             enableLooping: true 
             reference: configs/resources/audio/mono_ref.wav
-            createAnchor35: false
+            createAnchor35: true
             createAnchor70: false
             stimuli:
                 C1: configs/resources/audio/mono_c1.wav
                 C2: configs/resources/audio/mono_c2.wav
-                C3: configs/resources/audio/mono_c3.wav          
+                C3: configs/resources/audio/mono_c3.wav 
+                C4: configs/resources/audio/mono_c3.wav
     - type: finish
       name: Thank you
       content: Thank you for attending!
