@@ -11,8 +11,8 @@
     'use strict';
 
     // ── EDIT THESE TWO LINES ────────────────────────────────
-    var FORM_ID  = '1FAIpQLScW0skfGpSb7ZIH-DTBlvYP0qQZ9oYU0hNZiShQbnJYcs2j6A';
-    var ENTRY_ID = 'entry.1260314240';   // e.g. 'entry.123456789'
+    var FORM_ID  = '1FAIpQLSd7fIg9ohfsN01s8pcOpzx55LBzN0mrSCrWt6hRiO5tyHqbcw';
+    var ENTRY_ID = 'entry.1336624633';   // e.g. 'entry.123456789'
     // ────────────────────────────────────────────────────────
 
     var ACTION           = 'https://docs.google.com/forms/d/e/' + FORM_ID + '/formResponse';
