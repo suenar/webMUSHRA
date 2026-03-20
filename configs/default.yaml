@@ -30,541 +30,541 @@ pages:
       name: MUSHRA - trial_001
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_001/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_001/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_001/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_001/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_001/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_001/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_001/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_001/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_001/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_001/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_001/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_001/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_001/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_001/violindiff.mp3
     - type: mushra
       id: trial_002
       name: MUSHRA - trial_002
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_002/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_002/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_002/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_002/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_002/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_002/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_002/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_002/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_002/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_002/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_002/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_002/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_002/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_002/violindiff.mp3
     - type: mushra
       id: trial_003
       name: MUSHRA - trial_003
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_003/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_003/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_003/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_003/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_003/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_003/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_003/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_003/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_003/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_003/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_003/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_003/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_003/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_003/violindiff.mp3
     - type: mushra
       id: trial_004
       name: MUSHRA - trial_004
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_004/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_004/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_004/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_004/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_004/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_004/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_004/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_004/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_004/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_004/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_004/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_004/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_004/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_004/violindiff.mp3
     - type: mushra
       id: trial_005
       name: MUSHRA - trial_005
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_005/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_005/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_005/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_005/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_005/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_005/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_005/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_005/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_005/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_005/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_005/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_005/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_005/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_005/violindiff.mp3
     - type: mushra
       id: trial_006
       name: MUSHRA - trial_006
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_006/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_006/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_006/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_006/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_006/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_006/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_006/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_006/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_006/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_006/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_006/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_006/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_006/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_006/violindiff.mp3
     - type: mushra
       id: trial_007
       name: MUSHRA - trial_007
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_007/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_007/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_007/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_007/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_007/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_007/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_007/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_007/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_007/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_007/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_007/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_007/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_007/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_007/violindiff.mp3
     - type: mushra
       id: trial_008
       name: MUSHRA - trial_008
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_008/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_008/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_008/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_008/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_008/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_008/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_008/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_008/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_008/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_008/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_008/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_008/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_008/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_008/violindiff.mp3
     - type: mushra
       id: trial_009
       name: MUSHRA - trial_009
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_009/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_009/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_009/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_009/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_009/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_009/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_009/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_009/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_009/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_009/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_009/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_009/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_009/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_009/violindiff.mp3
     - type: mushra
       id: trial_010
       name: MUSHRA - trial_010
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_010/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_010/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_010/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_010/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_010/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_010/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_010/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_010/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_010/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_010/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_010/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_010/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_010/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_010/violindiff.mp3
     - type: mushra
       id: trial_011
       name: MUSHRA - trial_011
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_011/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_011/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_011/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_011/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_011/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_011/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_011/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_011/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_011/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_011/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_011/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_011/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_011/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_011/violindiff.mp3
     - type: mushra
       id: trial_012
       name: MUSHRA - trial_012
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_012/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_012/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_012/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_012/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_012/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_012/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_012/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_012/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_012/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_012/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_012/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_012/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_012/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_012/violindiff.mp3
     - type: mushra
       id: trial_013
       name: MUSHRA - trial_013
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_013/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_013/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_013/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_013/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_013/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_013/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_013/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_013/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_013/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_013/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_013/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_013/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_013/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_013/violindiff.mp3
     - type: mushra
       id: trial_014
       name: MUSHRA - trial_014
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_014/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_014/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_014/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_014/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_014/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_014/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_014/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_014/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_014/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_014/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_014/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_014/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_014/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_014/violindiff.mp3
     - type: mushra
       id: trial_015
       name: MUSHRA - trial_015
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_015/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_015/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_015/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_015/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_015/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_015/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_015/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_015/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_015/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_015/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_015/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_015/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_015/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_015/violindiff.mp3
     - type: mushra
       id: trial_016
       name: MUSHRA - trial_016
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_016/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_016/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_016/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_016/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_016/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_016/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_016/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_016/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_016/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_016/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_016/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_016/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_016/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_016/violindiff.mp3
     - type: mushra
       id: trial_017
       name: MUSHRA - trial_017
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_017/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_017/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_017/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_017/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_017/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_017/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_017/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_017/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_017/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_017/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_017/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_017/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_017/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_017/violindiff.mp3
     - type: mushra
       id: trial_018
       name: MUSHRA - trial_018
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_018/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_018/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_018/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_018/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_018/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_018/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_018/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_018/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_018/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_018/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_018/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_018/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_018/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_018/violindiff.mp3
     - type: mushra
       id: trial_019
       name: MUSHRA - trial_019
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_019/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_019/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_019/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_019/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_019/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_019/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_019/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_019/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_019/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_019/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_019/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_019/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_019/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_019/violindiff.mp3
     - type: mushra
       id: trial_020
       name: MUSHRA - trial_020
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_020/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_020/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_020/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_020/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_020/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_020/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_020/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_020/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_020/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_020/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_020/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_020/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_020/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_020/violindiff.mp3
     - type: mushra
       id: trial_021
       name: MUSHRA - trial_021
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_021/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_021/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_021/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_021/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_021/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_021/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_021/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_021/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_021/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_021/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_021/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_021/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_021/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_021/violindiff.mp3
     - type: mushra
       id: trial_022
       name: MUSHRA - trial_022
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_022/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_022/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_022/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_022/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_022/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_022/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_022/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_022/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_022/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_022/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_022/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_022/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_022/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_022/violindiff.mp3
     - type: mushra
       id: trial_023
       name: MUSHRA - trial_023
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_023/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_023/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_023/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_023/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_023/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_023/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_023/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_023/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_023/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_023/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_023/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_023/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_023/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_023/violindiff.mp3
     - type: mushra
       id: trial_024
       name: MUSHRA - trial_024
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_024/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_024/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_024/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_024/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_024/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_024/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_024/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_024/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_024/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_024/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_024/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_024/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_024/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_024/violindiff.mp3
     - type: mushra
       id: trial_025
       name: MUSHRA - trial_025
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_025/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_025/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_025/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_025/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_025/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_025/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_025/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_025/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_025/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_025/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_025/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_025/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_025/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_025/violindiff.mp3
     - type: mushra
       id: trial_026
       name: MUSHRA - trial_026
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_026/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_026/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_026/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_026/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_026/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_026/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_026/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_026/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_026/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_026/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_026/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_026/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_026/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_026/violindiff.mp3
     - type: mushra
       id: trial_027
       name: MUSHRA - trial_027
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_027/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_027/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_027/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_027/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_027/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_027/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_027/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_027/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_027/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_027/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_027/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_027/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_027/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_027/violindiff.mp3
     - type: mushra
       id: trial_028
       name: MUSHRA - trial_028
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_028/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_028/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_028/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_028/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_028/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_028/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_028/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_028/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_028/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_028/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_028/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_028/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_028/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_028/violindiff.mp3
     - type: mushra
       id: trial_029
       name: MUSHRA - trial_029
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_029/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_029/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_029/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_029/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_029/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_029/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_029/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_029/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_029/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_029/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_029/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_029/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_029/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_029/violindiff.mp3
     - type: mushra
       id: trial_030
       name: MUSHRA - trial_030
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_030/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_030/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_030/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_030/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_030/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_030/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_030/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_030/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_030/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_030/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_030/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_030/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_030/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_030/violindiff.mp3
     - type: mushra
       id: trial_031
       name: MUSHRA - trial_031
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_031/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_031/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_031/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_031/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_031/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_031/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_031/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_031/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_031/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_031/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_031/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_031/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_031/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_031/violindiff.mp3
     - type: mushra
       id: trial_032
       name: MUSHRA - trial_032
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_032/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_032/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_032/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_032/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_032/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_032/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_032/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_032/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_032/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_032/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_032/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_032/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_032/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_032/violindiff.mp3
     - type: mushra
       id: trial_033
       name: MUSHRA - trial_033
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_033/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_033/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_033/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_033/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_033/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_033/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_033/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_033/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_033/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_033/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_033/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_033/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_033/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_033/violindiff.mp3
     - type: mushra
       id: trial_034
       name: MUSHRA - trial_034
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_034/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_034/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_034/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_034/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_034/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_034/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_034/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_034/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_034/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_034/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_034/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_034/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_034/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_034/violindiff.mp3
     - type: mushra
       id: trial_035
       name: MUSHRA - trial_035
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_035/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_035/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_035/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_035/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_035/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_035/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_035/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_035/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_035/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_035/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_035/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_035/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_035/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_035/violindiff.mp3
     - type: mushra
       id: trial_036
       name: MUSHRA - trial_036
       showWaveform: true
       enableLooping: true
-      reference: configs/resources/audio/violin-valle/trial_036/reference.wav
+      reference: configs/resources/audio/violin-valle/trial_036/reference.mp3
       createAnchor35: true
       createAnchor70: false
       stimuli:
-          arti: configs/resources/audio/violin-valle/trial_036/arti.wav
-          arti-sft: configs/resources/audio/violin-valle/trial_036/arti-sft.wav
-          midi_player: configs/resources/audio/violin-valle/trial_036/midi_player.wav
-          no-arti: configs/resources/audio/violin-valle/trial_036/no-arti.wav
-          no-arti-sft: configs/resources/audio/violin-valle/trial_036/no-arti-sft.wav
-          violindiff: configs/resources/audio/violin-valle/trial_036/violindiff.wav
+          arti: configs/resources/audio/violin-valle/trial_036/arti.mp3
+          arti-sft: configs/resources/audio/violin-valle/trial_036/arti-sft.mp3
+          midi_player: configs/resources/audio/violin-valle/trial_036/midi_player.mp3
+          no-arti: configs/resources/audio/violin-valle/trial_036/no-arti.mp3
+          no-arti-sft: configs/resources/audio/violin-valle/trial_036/no-arti-sft.mp3
+          violindiff: configs/resources/audio/violin-valle/trial_036/violindiff.mp3
     - type: finish
       name: Thank you
       content: Thank you for attending!
