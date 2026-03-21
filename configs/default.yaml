@@ -3,7 +3,8 @@ testId: default_example
 bufferSize: 2048
 stopOnErrors: true
 showButtonPreviousPage: true
-remoteService: service/write.php
+# Empty = no server upload (required on GitHub Pages; PHP is not available). Use google-forms-submit.js for Google Forms.
+remoteService: ""
 
 
 pages:

@@ -1,10 +1,12 @@
 // ============================================================
 // Google Forms Integration for webMUSHRA (GitHub Pages)
 //
-// SETUP — only two things to change:
-//   1. Set ENTRY_ID to your Google Form entry ID (see below)
-//   2. Make sure index.html has this before </body>:
-//        <script src="google-forms-submit.js"></script>
+// SETUP:
+//   1. FORM_ID — from your form URL: .../forms/d/e/<FORM_ID>/viewform
+//   2. ENTRY_ID — "Get pre-filled link" → inspect name="entry.XXXXX" for one question
+//   3. That question should be a **Paragraph** (not Short answer): large JSON, often 10k–80k chars
+//   4. For GitHub Pages set remoteService: "" in YAML so write.php is not called (405)
+//   5. index.html before </body>: <script src="google-forms-submit.js"></script>
 // ============================================================
 
 (function () {
@@ -50,12 +52,67 @@
     }
 
     // ── 3. COLLECT DATA ──────────────────────────────────────
+    // Google Forms rejects large POST bodies (~413). Session objects contain
+    // Stimulus references with AudioBuffers — JSON.stringify keeps enumerable
+    // keys and blows up size. Export a compact, analysis-friendly shape only.
+
+    function stimulusToPlain(s) {
+        if (s == null) { return null; }
+        if (typeof s === 'string') { return s; }
+        var id = s.id;
+        var fp = s.filepath;
+        if (id == null && typeof s.getId === 'function') { id = s.getId(); }
+        if (fp == null && typeof s.getFilepath === 'function') { fp = s.getFilepath(); }
+        if (id == null && fp == null) { return String(s); }
+        return { id: id, filepath: fp };
+    }
+
+    function responseToPlain(r) {
+        if (r == null) { return null; }
+        var o = {};
+        var k;
+        for (k in r) {
+            if (!Object.prototype.hasOwnProperty.call(r, k)) { continue; }
+            if (k === 'stimulus' || k === 'reference' || k === 'nonReference') {
+                o[k] = stimulusToPlain(r[k]);
+            } else {
+                o[k] = r[k];
+            }
+        }
+        return o;
+    }
+
+    function compactSession(sess) {
+        if (!sess) { return null; }
+        var out = {
+            testId: sess.testId,
+            uuid: sess.uuid,
+            config: sess.config,
+            participant: sess.participant ? {
+                name: sess.participant.name,
+                response: sess.participant.response
+            } : null,
+            trials: []
+        };
+        var trials = sess.trials || [];
+        var i, j;
+        for (i = 0; i < trials.length; i++) {
+            var t = trials[i];
+            var row = { id: t.id, type: t.type, responses: [] };
+            var res = t.responses || [];
+            for (j = 0; j < res.length; j++) {
+                row.responses.push(responseToPlain(res[j]));
+            }
+            out.trials.push(row);
+        }
+        return out;
+    }
 
     function collectData() {
         var payload = {
             timestamp  : new Date().toISOString(),
             userAgent  : navigator.userAgent,
-            trials     : null,
+            session    : null,
             formFields : {}
         };
 
@@ -69,8 +126,8 @@
 
         for (var i = 0; i < candidates.length; i++) {
             if (candidates[i]) {
-                payload.trials = candidates[i];
-                console.log('[GForms] Trial data found at candidate[' + i + '].');
+                payload.session = compactSession(candidates[i]);
+                console.log('[GForms] Trial data found at candidate[' + i + '] (compact export).');
                 break;
             }
         }
@@ -83,7 +140,7 @@
             }
         });
 
-        if (!payload.trials) {
+        if (!payload.session) {
             console.warn('[GForms] No trial data found — only form fields will be saved.');
         }
 
@@ -94,22 +151,30 @@
 
     function submit() {
         var data    = collectData();
-        var jsonStr = JSON.stringify(data, null, 2);
-        console.log('[GForms] Submitting payload:', data);
+        // Compact JSON for Google (no pretty-print) to stay under size limits
+        var jsonCompact = JSON.stringify(data);
+        var jsonPretty  = JSON.stringify(data, null, 2);
+        var charCount   = jsonCompact.length;
+        console.log('[GForms] Submitting payload (compact JSON, ' + charCount + ' chars):', data);
+        if (charCount > 45000) {
+            console.warn('[GForms] Payload is large; Google may reject (413). Consider splitting across multiple form fields or use a Google Apps Script endpoint.');
+        }
 
         var fd = new FormData();
-        fd.append(ENTRY_ID, jsonStr);          // ← uses ENTRY_ID, defined above
+        fd.append(ENTRY_ID, jsonCompact);
 
+        // no-cors: response is opaque — we cannot see HTTP status (413/200).
+        // Network errors still reject the promise.
         fetch(ACTION, { method: 'POST', mode: 'no-cors', body: fd })
             .then(function () {
-                console.log('[GForms] Submitted to Google Forms successfully!');
-                alert('✅ Results submitted!\n\nA backup file will now download.');
-                downloadJSON(jsonStr, 'results');
+                console.log('[GForms] POST to Google Forms finished (status not visible with no-cors). Check the form responses sheet.');
+                alert('Results were sent to Google Forms.\n\nBecause of browser security, we cannot confirm the HTTP status. If nothing appears in your spreadsheet, check the console for size warnings (413 = payload too large).\n\nA JSON backup will download next.');
+                downloadJSON(jsonPretty, 'results');
             })
             .catch(function (err) {
-                console.error('[GForms] Submission failed:', err);
-                alert('⚠️ Online submission failed.\nPlease email the backup file to the researcher.');
-                downloadJSON(jsonStr, 'results_BACKUP');
+                console.error('[GForms] Submission failed (network):', err);
+                alert('⚠️ Could not reach Google Forms (network error).\nPlease send the researcher the downloaded backup file.');
+                downloadJSON(jsonPretty, 'results_BACKUP');
             });
     }
 
