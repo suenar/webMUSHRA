@@ -54,6 +54,13 @@ Now you can run webMUSHRA using the following URL: http://localhost:8000
 
 The experiment configurations are stored in the `configs/` folder. To load a configuration/experiment, specify the `config` argument in the url http://localhost:8000/?config=mushra_showresults.yaml. `configs/default.yaml` is the configuration loaded when no config is specified.
 
+### Audio constraints (MP3 / browser decode)
+
+Browsers can decode MP3 with slight padding so `AudioBuffer.duration` may exceed the file’s nominal length. webMUSHRA rejects stimuli longer than 12s and requires reference and conditions to share the same decoded length. Helper scripts (need `ffmpeg`/`ffprobe` on your `PATH`, e.g. `conda activate audio`):
+
+- `scripts/normalize_mushra_audio.sh` — for each `*.mp3` under `configs/resources/audio/violin-valle/`, if duration is 12s or longer, trim to 11.90s (override with `TRIM_SECONDS`); if already shorter than 12s, leave unchanged.
+- `scripts/verify_mushra_trial_audio.sh` — checks each `trial_*` folder for uniform duration/sample rate/channels and that duration stays under 12s.
+
 ### Docker
 
 You can use docker to set up webMUSHRA quickly. Just run
