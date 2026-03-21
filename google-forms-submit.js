@@ -5,6 +5,7 @@
 //   1. FORM_ID — from your form URL: .../forms/d/e/<FORM_ID>/viewform
 //   2. ENTRY_ID — "Get pre-filled link" → inspect name="entry.XXXXX" for one question
 //   3. That question should be a **Paragraph** (not Short answer): large JSON, often 10k–80k chars
+//   Payload keys (short): ts, ua, s, q | s.tr[] = trials: { i, rs } | rs MUSHRA: { x:{i,f}, c, m }
 //   4. For GitHub Pages set remoteService: "" in YAML so write.php is not called (405)
 //   5. index.html before </body>: <script src="google-forms-submit.js"></script>
 // ============================================================
@@ -56,64 +57,71 @@
     // Stimulus references with AudioBuffers — JSON.stringify keeps enumerable
     // keys and blows up size. Export a compact, analysis-friendly shape only.
 
-    function stimulusToPlain(s) {
+    // Stimulus → { i: id, f: filepath } (short keys)
+    function stimulusToShort(s) {
         if (s == null) { return null; }
-        if (typeof s === 'string') { return s; }
+        if (typeof s === 'string') { return { i: s, f: null }; }
         var id = s.id;
         var fp = s.filepath;
         if (id == null && typeof s.getId === 'function') { id = s.getId(); }
         if (fp == null && typeof s.getFilepath === 'function') { fp = s.getFilepath(); }
-        if (id == null && fp == null) { return String(s); }
-        return { id: id, filepath: fp };
+        if (id == null && fp == null) { return { i: String(s), f: null }; }
+        return { i: id, f: fp };
     }
 
-    function responseToPlain(r) {
+    // MUSHRA: x=stimulus {i,f}, c=score, m=time (no comment, no trial type in parent)
+    // Likert multi-stimulus: x=stimulus, lr=rating, m=time
+    function compactResponse(r) {
         if (r == null) { return null; }
-        var o = {};
-        var k;
-        for (k in r) {
-            if (!Object.prototype.hasOwnProperty.call(r, k)) { continue; }
-            if (k === 'stimulus' || k === 'reference' || k === 'nonReference') {
-                o[k] = stimulusToPlain(r[k]);
-            } else {
-                o[k] = r[k];
-            }
+        if (r.stimulus != null && r.score != null) {
+            return { x: stimulusToShort(r.stimulus), c: r.score, m: r.time };
         }
+        if (r.stimulus != null && r.stimulusRating != null) {
+            return { x: stimulusToShort(r.stimulus), lr: r.stimulusRating, m: r.time };
+        }
+        // Other types (no comment): short keys a/b/w/rc/nc
+        var o = {};
+        if (r.reference != null) { o.a = stimulusToShort(r.reference); }
+        if (r.nonReference != null) { o.b = stimulusToShort(r.nonReference); }
+        if (r.answer != null) { o.w = r.answer; }
+        if (r.referenceScore != null) { o.rc = r.referenceScore; }
+        if (r.nonReferenceScore != null) { o.nc = r.nonReferenceScore; }
         return o;
     }
 
+    // Session: short keys (tid,u,cfg,p,tr) to shrink POST body for Google Forms
     function compactSession(sess) {
         if (!sess) { return null; }
         var out = {
-            testId: sess.testId,
-            uuid: sess.uuid,
-            config: sess.config,
-            participant: sess.participant ? {
-                name: sess.participant.name,
-                response: sess.participant.response
+            tid: sess.testId,
+            u: sess.uuid,
+            cfg: sess.config,
+            p: sess.participant ? {
+                n: sess.participant.name,
+                r: sess.participant.response
             } : null,
-            trials: []
+            tr: []
         };
         var trials = sess.trials || [];
         var i, j;
         for (i = 0; i < trials.length; i++) {
             var t = trials[i];
-            var row = { id: t.id, type: t.type, responses: [] };
+            var row = { i: t.id, rs: [] };
             var res = t.responses || [];
             for (j = 0; j < res.length; j++) {
-                row.responses.push(responseToPlain(res[j]));
+                row.rs.push(compactResponse(res[j]));
             }
-            out.trials.push(row);
+            out.tr.push(row);
         }
         return out;
     }
 
     function collectData() {
         var payload = {
-            timestamp  : new Date().toISOString(),
-            userAgent  : navigator.userAgent,
-            session    : null,
-            formFields : {}
+            ts: new Date().toISOString(),
+            ua: navigator.userAgent,
+            s: null,
+            q: {}
         };
 
         // webMUSHRA keeps trial data in one of these globals
@@ -126,7 +134,7 @@
 
         for (var i = 0; i < candidates.length; i++) {
             if (candidates[i]) {
-                payload.session = compactSession(candidates[i]);
+                payload.s = compactSession(candidates[i]);
                 console.log('[GForms] Trial data found at candidate[' + i + '] (compact export).');
                 break;
             }
@@ -136,11 +144,11 @@
         document.querySelectorAll('input, textarea, select').forEach(function (el) {
             var key = el.name || el.id;
             if (key && el.value) {
-                payload.formFields[key] = el.value;
+                payload.q[key] = el.value;
             }
         });
 
-        if (!payload.session) {
+        if (!payload.s) {
             console.warn('[GForms] No trial data found — only form fields will be saved.');
         }
 
