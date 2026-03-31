@@ -180,11 +180,12 @@ function startup(config) {
   }, true);
 
   try {
-    audioContext.destination.channelCountMode = "explicit";
-    audioContext.destination.channelInterpretation = "discrete";
-    audioContext.destination.channelCount = audioContext.destination.maxChannelCount;
+    // Keep browser default channel routing. Forcing explicit/discrete multi-channel
+    // output can lead to inaudible playback on some Safari/device combinations.
+    var maxOutChannels = audioContext.destination.maxChannelCount || 2;
+    audioContext.destination.channelCount = Math.min(2, maxOutChannels);
   } catch (e) {
-    console.log("webMUSHRA: Could not set channel count of destination node.");
+    console.log("webMUSHRA: Could not set safe channel count of destination node.");
     console.log(e);
   }
   audioContext.volume = 1.0;

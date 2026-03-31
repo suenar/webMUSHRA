@@ -1,4 +1,4 @@
-testname: VioLM MUSHRA Test Demo
+testname: VioLM MUSHRA Test
 testId: default_example
 bufferSize: 2048
 stopOnErrors: true
