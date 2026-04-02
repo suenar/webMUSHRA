@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """
-Analyze objective trial-by-trial summary CSV and generate:
-  - Descriptive statistics
-  - Robust per-system statistics
-  - Inferential tests (ANOVA, Kruskal-Wallis, paired tests vs anchor)
-  - Effect sizes vs anchor
-  - Trial winner summaries
-  - Multiple charts
+Compare 7 systems across trials on three objective metrics:
+  - fad (lower is better)
+  - chroma_mean (higher is better)
+  - midispec_mean (higher is better)
+
+Generates statistical tables and charts focused on system-to-system comparison.
 
 Usage:
   python3 scripts/analyze_objective_results.py \
@@ -19,26 +18,25 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 from typing import Dict, Iterable, List
+import warnings
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy import stats
-import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy import stats
 
 
-def cliffs_delta(x: Iterable[float], y: Iterable[float]) -> float:
-    """Compute Cliff's delta effect size for two independent samples."""
-    xv = np.asarray(list(x), dtype=float)
-    yv = np.asarray(list(y), dtype=float)
-    gt = sum(ix > iy for ix in xv for iy in yv)
-    lt = sum(ix < iy for ix in xv for iy in yv)
-    return (gt - lt) / (len(xv) * len(yv))
+METRICS_INFO = {
+    "fad": {"better": "lower", "label": "FAD"},
+    "chroma_mean": {"better": "higher", "label": "Chroma Mean"},
+    "midispec_mean": {"better": "higher", "label": "MIDISpec Mean"},
+}
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Analyze objective trial-by-trial summary CSV."
+        description="System comparison analysis for objective trial summary CSV."
     )
     parser.add_argument(
         "--input",
@@ -56,286 +54,358 @@ def parse_args() -> argparse.Namespace:
         "--dpi",
         type=int,
         default=180,
-        help="DPI for PNG charts.",
+        help="DPI for output PNG charts.",
     )
     return parser.parse_args()
 
 
-def ensure_numeric(df: pd.DataFrame, columns: List[str]) -> None:
+def ensure_numeric(df: pd.DataFrame, columns: Iterable[str]) -> None:
     for col in columns:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
 
-def compute_global_tables(df: pd.DataFrame, metrics: List[str]) -> Dict[str, pd.DataFrame]:
-    global_stats = df[metrics].agg(["count", "mean", "median", "std", "min", "max"]).T
-    global_stats["cv"] = global_stats["std"] / global_stats["mean"]
-    global_stats["skew"] = df[metrics].skew(numeric_only=True)
-    global_stats["kurtosis"] = df[metrics].kurtosis(numeric_only=True)
-
-    percentiles = df[metrics].quantile(
-        [0.01, 0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99]
-    ).T
-
-    per_system_stats = df.groupby("system")[metrics].agg(
-        ["count", "mean", "median", "std", "min", "max"]
-    )
-
-    fad_ranking = (
-        df.groupby("system")["fad"].mean().sort_values().reset_index()
-    )
-    fad_ranking["rank"] = np.arange(1, len(fad_ranking) + 1)
-
-    pearson_corr = df[metrics].corr(method="pearson")
-    spearman_corr = df[metrics].corr(method="spearman")
-
-    q1, q3 = df["fad"].quantile([0.25, 0.75])
-    iqr = q3 - q1
-    lb, ub = q1 - 1.5 * iqr, q3 + 1.5 * iqr
-    fad_outliers = df[(df["fad"] < lb) | (df["fad"] > ub)].sort_values(
-        "fad", ascending=False
-    )
-
-    return {
-        "global_stats": global_stats,
-        "percentiles": percentiles,
-        "per_system_stats": per_system_stats,
-        "fad_ranking": fad_ranking,
-        "pearson_corr": pearson_corr,
-        "spearman_corr": spearman_corr,
-        "fad_outliers": fad_outliers,
-    }
+def holm_adjust(pvals: List[float]) -> List[float]:
+    """Holm-Bonferroni correction (returns adjusted p-values in original order)."""
+    p = np.asarray(pvals, dtype=float)
+    n = len(p)
+    order = np.argsort(p)
+    p_sorted = p[order]
+    adjusted_sorted = np.empty(n, dtype=float)
+    for i, val in enumerate(p_sorted):
+        adjusted_sorted[i] = min(1.0, (n - i) * val)
+    adjusted_sorted = np.maximum.accumulate(adjusted_sorted)
+    adjusted = np.empty(n, dtype=float)
+    adjusted[order] = adjusted_sorted
+    return adjusted.tolist()
 
 
-def compute_vs_anchor(df: pd.DataFrame) -> pd.DataFrame:
-    pivot = df.pivot_table(index="trial_id", columns="system", values="fad", aggfunc="mean")
-    if "anchor" not in pivot.columns:
-        return pd.DataFrame()
-
-    rows = {}
-    for system in pivot.columns:
-        if system == "anchor":
-            continue
-        paired = pivot[["anchor", system]].dropna()
-        if len(paired) <= 2:
-            continue
-        improvement = (paired["anchor"] - paired[system]) / paired["anchor"] * 100.0
-        t_res = stats.ttest_rel(paired["anchor"], paired[system], alternative="greater")
-        w_res = stats.wilcoxon(
-            paired["anchor"] - paired[system],
-            alternative="greater",
-            zero_method="wilcox",
-        )
-        rows[system] = {
-            "n_pairs": len(paired),
-            "mean_improvement_%": improvement.mean(),
-            "median_improvement_%": improvement.median(),
-            "t_stat": float(t_res.statistic),
-            "t_pvalue_one_sided": float(t_res.pvalue),
-            "wilcoxon_stat": float(w_res.statistic),
-            "wilcoxon_pvalue_one_sided": float(w_res.pvalue),
-        }
-    if not rows:
-        return pd.DataFrame()
-    return pd.DataFrame(rows).T.sort_values("mean_improvement_%", ascending=False)
+def cliffs_delta(x: Iterable[float], y: Iterable[float]) -> float:
+    xv = np.asarray(list(x), dtype=float)
+    yv = np.asarray(list(y), dtype=float)
+    gt = sum(ix > iy for ix in xv for iy in yv)
+    lt = sum(ix < iy for ix in xv for iy in yv)
+    return (gt - lt) / (len(xv) * len(yv))
 
 
-def compute_inferential(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
-    systems = sorted(df["system"].dropna().unique().tolist())
-    groups = [df.loc[df["system"] == s, "fad"].dropna().values for s in systems]
-
-    anova = stats.f_oneway(*groups)
-    kruskal = stats.kruskal(*groups)
-
-    all_vals = df["fad"].dropna().values
-    grand_mean = all_vals.mean()
-    ss_between = sum(len(g) * (g.mean() - grand_mean) ** 2 for g in groups)
-    ss_total = sum((all_vals - grand_mean) ** 2)
-    eta_sq = ss_between / ss_total
-
-    overall = pd.DataFrame(
-        [
-            {"test": "one_way_anova", "statistic": anova.statistic, "pvalue": anova.pvalue},
-            {"test": "kruskal_wallis", "statistic": kruskal.statistic, "pvalue": kruskal.pvalue},
-            {"test": "eta_squared_from_anova", "statistic": eta_sq, "pvalue": np.nan},
-        ]
-    )
-
-    robust_rows = []
-    for system, grp in df.groupby("system"):
-        x = grp["fad"].dropna().values
-        q1, q3 = np.quantile(x, 0.25), np.quantile(x, 0.75)
-        iqr = q3 - q1
-        sem = x.std(ddof=1) / np.sqrt(len(x))
-        ci95 = 1.96 * sem
-        sh = stats.shapiro(x)
-        robust_rows.append(
-            {
-                "system": system,
-                "n": len(x),
-                "mean": x.mean(),
-                "median": np.median(x),
-                "std": x.std(ddof=1),
-                "cv": x.std(ddof=1) / x.mean(),
-                "q1": q1,
-                "q3": q3,
-                "iqr": iqr,
-                "ci95_low_mean": x.mean() - ci95,
-                "ci95_high_mean": x.mean() + ci95,
-                "shapiro_W": sh.statistic,
-                "shapiro_p": sh.pvalue,
-            }
-        )
-    per_system_robust = pd.DataFrame(robust_rows).sort_values("mean")
-
-    effect_sizes_vs_anchor = pd.DataFrame()
-    if "anchor" in df["system"].values:
-        anchor = df.loc[df["system"] == "anchor", "fad"].values
-        effect_rows = []
-        for system in systems:
-            if system == "anchor":
+def metric_system_summary(df: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for metric, info in METRICS_INFO.items():
+        for system, grp in df.groupby("system"):
+            x = grp[metric].dropna().values
+            if len(x) == 0:
                 continue
-            x = df.loc[df["system"] == system, "fad"].values
-            nx, ny = len(x), len(anchor)
-            sx, sy = x.std(ddof=1), anchor.std(ddof=1)
-            sp = np.sqrt(((nx - 1) * sx * sx + (ny - 1) * sy * sy) / (nx + ny - 2))
-            d = (x.mean() - anchor.mean()) / sp
-            u_res = stats.mannwhitneyu(x, anchor, alternative="two-sided")
-            effect_rows.append(
+            q1, q3 = np.quantile(x, 0.25), np.quantile(x, 0.75)
+            iqr = q3 - q1
+            std = x.std(ddof=1) if len(x) > 1 else 0.0
+            sem = std / np.sqrt(len(x)) if len(x) > 1 else 0.0
+            ci95 = 1.96 * sem
+            rows.append(
                 {
+                    "metric": metric,
+                    "better_direction": info["better"],
                     "system": system,
-                    "mean_fad": x.mean(),
-                    "delta_vs_anchor_mean": x.mean() - anchor.mean(),
-                    "cohens_d_vs_anchor": d,
-                    "cliffs_delta_vs_anchor": cliffs_delta(x, anchor),
-                    "mannwhitney_u": u_res.statistic,
-                    "mannwhitney_p_two_sided": u_res.pvalue,
+                    "n": len(x),
+                    "mean": x.mean(),
+                    "median": np.median(x),
+                    "std": std,
+                    "cv": std / x.mean() if x.mean() != 0 else np.nan,
+                    "min": x.min(),
+                    "q1": q1,
+                    "q3": q3,
+                    "max": x.max(),
+                    "iqr": iqr,
+                    "ci95_low_mean": x.mean() - ci95,
+                    "ci95_high_mean": x.mean() + ci95,
                 }
             )
-        effect_sizes_vs_anchor = pd.DataFrame(effect_rows).sort_values("mean_fad")
+    out = pd.DataFrame(rows)
+    return out.sort_values(["metric", "mean"], ascending=[True, True])
 
+
+def ranking_by_metric(summary_df: pd.DataFrame) -> pd.DataFrame:
+    ranking_rows = []
+    for metric, info in METRICS_INFO.items():
+        m = summary_df[summary_df["metric"] == metric].copy()
+        m = m.sort_values("mean", ascending=(info["better"] == "lower"))
+        m["rank"] = np.arange(1, len(m) + 1)
+        ranking_rows.append(
+            m[["metric", "system", "mean", "median", "std", "ci95_low_mean", "ci95_high_mean", "rank"]]
+        )
+    return pd.concat(ranking_rows, ignore_index=True)
+
+
+def inferential_by_metric(df: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for metric, info in METRICS_INFO.items():
+        systems = sorted(df["system"].dropna().unique().tolist())
+        groups = [df.loc[df["system"] == s, metric].dropna().values for s in systems]
+        groups = [g for g in groups if len(g) > 0]
+
+        anova_f = np.nan
+        anova_p = np.nan
+        if len(groups) >= 2:
+            group_means = [g.mean() for g in groups]
+            within_ss = sum(float(np.sum((g - g.mean()) ** 2)) for g in groups)
+            if within_ss <= 1e-15:
+                # Perfectly constant groups: ANOVA F is either inf (different means) or undefined.
+                anova_f = np.inf if np.ptp(group_means) > 1e-15 else np.nan
+                anova_p = 0.0 if np.isinf(anova_f) else np.nan
+            else:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore", category=RuntimeWarning)
+                    a = stats.f_oneway(*groups)
+                anova_f = float(a.statistic)
+                anova_p = float(a.pvalue)
+
+        kruskal = stats.kruskal(*groups) if len(groups) >= 2 else None
+
+        all_vals = df[metric].dropna().values
+        if len(all_vals) > 0 and len(groups) >= 2:
+            grand_mean = all_vals.mean()
+            ss_between = sum(len(g) * (g.mean() - grand_mean) ** 2 for g in groups)
+            ss_total = sum((all_vals - grand_mean) ** 2)
+            eta_sq = ss_between / ss_total if ss_total > 0 else np.nan
+        else:
+            eta_sq = np.nan
+
+        pivot = df.pivot_table(index="trial_id", columns="system", values=metric, aggfunc="mean")
+        complete = pivot.dropna()
+        if complete.shape[0] > 1 and complete.shape[1] > 2:
+            f_res = stats.friedmanchisquare(*[complete[c].values for c in complete.columns])
+            kendall_w = f_res.statistic / (complete.shape[0] * (complete.shape[1] - 1))
+            friedman_stat = float(f_res.statistic)
+            friedman_p = float(f_res.pvalue)
+        else:
+            friedman_stat = np.nan
+            friedman_p = np.nan
+            kendall_w = np.nan
+
+        rows.append(
+            {
+                "metric": metric,
+                "better_direction": info["better"],
+                "n_systems": len(systems),
+                "n_trials_complete_for_friedman": complete.shape[0],
+                "anova_f_stat": anova_f,
+                "anova_pvalue": anova_p,
+                "eta_squared_anova": eta_sq,
+                "kruskal_h_stat": float(kruskal.statistic) if kruskal else np.nan,
+                "kruskal_pvalue": float(kruskal.pvalue) if kruskal else np.nan,
+                "friedman_chi2_stat": friedman_stat,
+                "friedman_pvalue": friedman_p,
+                "kendalls_w": kendall_w,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def pairwise_vs_anchor_by_metric(df: pd.DataFrame) -> pd.DataFrame:
+    if "anchor" not in set(df["system"].dropna().unique()):
+        return pd.DataFrame()
+
+    rows = []
+    for metric, info in METRICS_INFO.items():
+        pivot = df.pivot_table(index="trial_id", columns="system", values=metric, aggfunc="mean")
+        if "anchor" not in pivot.columns:
+            continue
+        systems = [s for s in sorted(pivot.columns.tolist()) if s != "anchor"]
+        metric_rows = []
+
+        for system in systems:
+            paired = pivot[["anchor", system]].dropna()
+            if len(paired) <= 2:
+                continue
+            a = paired["anchor"].values
+            b = paired[system].values
+
+            if info["better"] == "lower":
+                # Positive means tested system improved vs anchor
+                delta = (a - b) / np.maximum(np.abs(a), 1e-12) * 100.0
+                diff = a - b
+            else:
+                delta = (b - a) / np.maximum(np.abs(a), 1e-12) * 100.0
+                diff = b - a
+
+            # Robust paired one-sided t-test handling for near-zero variance differences.
+            diff_std = float(np.std(diff, ddof=1)) if len(diff) > 1 else 0.0
+            diff_mean = float(np.mean(diff))
+            if diff_std <= 1e-15:
+                if diff_mean > 0:
+                    t_stat, t_p = np.inf, 0.0
+                elif diff_mean < 0:
+                    t_stat, t_p = -np.inf, 1.0
+                else:
+                    t_stat, t_p = np.nan, 1.0
+            else:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore", category=RuntimeWarning)
+                    t_res = stats.ttest_rel(diff, np.zeros_like(diff), alternative="greater")
+                t_stat, t_p = float(t_res.statistic), float(t_res.pvalue)
+
+            try:
+                w_res = stats.wilcoxon(diff, alternative="greater", zero_method="wilcox")
+                w_stat, w_p = float(w_res.statistic), float(w_res.pvalue)
+            except ValueError:
+                w_stat, w_p = np.nan, np.nan
+
+            metric_rows.append(
+                {
+                    "metric": metric,
+                    "better_direction": info["better"],
+                    "system": system,
+                    "n_pairs": len(paired),
+                    "mean_delta_vs_anchor_%": float(np.mean(delta)),
+                    "median_delta_vs_anchor_%": float(np.median(delta)),
+                    "cohens_d_paired": float(diff_mean / diff_std) if diff_std > 0 else np.nan,
+                    "cliffs_delta_independent": cliffs_delta(b, a),
+                    "ttest_stat_one_sided": t_stat,
+                    "ttest_pvalue_one_sided": t_p,
+                    "wilcoxon_stat_one_sided": w_stat,
+                    "wilcoxon_pvalue_one_sided": w_p,
+                }
+            )
+
+        if metric_rows:
+            mdf = pd.DataFrame(metric_rows)
+            mdf["ttest_p_holm"] = holm_adjust(mdf["ttest_pvalue_one_sided"].tolist())
+            valid_w = mdf["wilcoxon_pvalue_one_sided"].notna()
+            mdf["wilcoxon_p_holm"] = np.nan
+            if valid_w.sum() > 0:
+                adj = holm_adjust(mdf.loc[valid_w, "wilcoxon_pvalue_one_sided"].tolist())
+                mdf.loc[valid_w, "wilcoxon_p_holm"] = adj
+            rows.append(mdf)
+
+    if not rows:
+        return pd.DataFrame()
+    return pd.concat(rows, ignore_index=True).sort_values(["metric", "mean_delta_vs_anchor_%"], ascending=[True, False])
+
+
+def winners_by_metric(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+    winner_rows = []
+    for metric, info in METRICS_INFO.items():
+        grouped = df.groupby("trial_id")[metric]
+        idx = grouped.idxmin() if info["better"] == "lower" else grouped.idxmax()
+        winners = df.loc[idx, ["trial_id", "system", metric]].copy()
+        winners = winners.rename(columns={metric: "value"})
+        winners["metric"] = metric
+        winner_rows.append(winners[["metric", "trial_id", "system", "value"]])
+
+    trial_winners = pd.concat(winner_rows, ignore_index=True).sort_values(["metric", "trial_id"])
+    winner_counts = (
+        trial_winners.groupby(["metric", "system"])
+        .size()
+        .reset_index(name="wins")
+        .sort_values(["metric", "wins"], ascending=[True, False])
+    )
+    return {"trial_winners_by_metric": trial_winners, "trial_winner_counts_by_metric": winner_counts}
+
+
+def correlation_tables(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+    metrics = list(METRICS_INFO.keys())
     return {
-        "overall_inferential_stats": overall,
-        "per_system_robust_stats": per_system_robust,
-        "effect_sizes_vs_anchor": effect_sizes_vs_anchor,
+        "pearson_corr": df[metrics].corr(method="pearson"),
+        "spearman_corr": df[metrics].corr(method="spearman"),
     }
 
 
-def compute_trial_winners(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
-    idx = df.groupby("trial_id")["fad"].idxmin()
-    winners = df.loc[idx, ["trial_id", "system", "fad"]].sort_values("trial_id")
-    winner_counts = (
-        winners["system"].value_counts().rename_axis("system").reset_index(name="wins")
-    )
-    return {"trial_winners": winners, "trial_winner_counts": winner_counts}
-
-
-def save_tables_as_csv(tables: Dict[str, pd.DataFrame], outdir: Path) -> None:
-    for name, table in tables.items():
-        table.to_csv(outdir / f"{name}.csv", index=(table.index.name is not None))
-
-
-def save_excel(all_tables: Dict[str, pd.DataFrame], outpath: Path) -> None:
-    with pd.ExcelWriter(outpath, engine="openpyxl") as writer:
-        for name, table in all_tables.items():
-            table.to_excel(writer, sheet_name=name[:31], index=True)
-
-
-def make_charts(df: pd.DataFrame, pearson_corr: pd.DataFrame, outdir: Path, dpi: int) -> None:
+def make_charts(df: pd.DataFrame, summary_df: pd.DataFrame, outdir: Path, dpi: int) -> List[Path]:
     sns.set_theme(style="whitegrid", context="talk")
+    metrics = list(METRICS_INFO.keys())
+    created: List[Path] = []
 
-    # 01: FAD distribution
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
-    sns.histplot(df["fad"], bins=30, kde=True, ax=axes[0], color="#4C72B0")
-    axes[0].set_title("FAD Distribution (Linear Scale)")
-    axes[0].set_xlabel("FAD")
-    sns.histplot(np.log10(df["fad"]), bins=30, kde=True, ax=axes[1], color="#55A868")
-    axes[1].set_title("log10(FAD) Distribution")
-    axes[1].set_xlabel("log10(FAD)")
+    # 01: Three-metric boxplots by system
+    fig, axes = plt.subplots(1, 3, figsize=(22, 6))
+    for ax, metric in zip(axes, metrics):
+        info = METRICS_INFO[metric]
+        order = (
+            df.groupby("system")[metric]
+            .mean()
+            .sort_values(ascending=(info["better"] == "lower"))
+            .index
+        )
+        sns.boxplot(data=df, x="system", y=metric, order=order, ax=ax, hue="system", dodge=False, legend=False)
+        sns.stripplot(data=df, x="system", y=metric, order=order, ax=ax, color="black", size=2.8, alpha=0.4)
+        ax.set_title(f"{info['label']} by System")
+        ax.set_xlabel("System")
+        ax.tick_params(axis="x", rotation=30)
+        if metric == "fad":
+            ax.set_yscale("log")
+            ax.set_ylabel(f"{info['label']} (log scale)")
     fig.tight_layout()
-    fig.savefig(outdir / "chart_01_fad_distribution.png", dpi=dpi)
+    p = outdir / "chart_01_system_comparison_boxplots.png"
+    fig.savefig(p, dpi=dpi)
+    created.append(p)
     plt.close(fig)
 
-    # 02: FAD by system
-    order = df.groupby("system")["fad"].mean().sort_values().index
-    fig, ax = plt.subplots(figsize=(12, 7))
-    sns.boxplot(data=df, x="system", y="fad", order=order, ax=ax, hue="system", dodge=False, legend=False)
-    sns.stripplot(data=df, x="system", y="fad", order=order, ax=ax, color="black", size=3, alpha=0.45)
-    ax.set_title("FAD by System (lower is better)")
-    ax.set_xlabel("System (sorted by mean FAD)")
-    ax.tick_params(axis="x", rotation=30)
+    # 02: Mean ranking with 95% CI for each metric
+    fig, axes = plt.subplots(1, 3, figsize=(22, 6))
+    for ax, metric in zip(axes, metrics):
+        info = METRICS_INFO[metric]
+        m = summary_df[summary_df["metric"] == metric].copy()
+        m = m.sort_values("mean", ascending=(info["better"] == "lower"))
+        ax.bar(
+            m["system"],
+            m["mean"],
+            yerr=(m["ci95_high_mean"] - m["mean"]).values,
+            capsize=4,
+            color=sns.color_palette("viridis", len(m)),
+        )
+        ax.set_title(f"Mean {info['label']} ±95% CI")
+        ax.tick_params(axis="x", rotation=30)
+        if metric == "fad":
+            ax.set_yscale("log")
     fig.tight_layout()
-    fig.savefig(outdir / "chart_02_fad_by_system_box.png", dpi=dpi)
+    p = outdir / "chart_02_metric_rankings_ci.png"
+    fig.savefig(p, dpi=dpi)
+    created.append(p)
     plt.close(fig)
 
-    # 03: Mean metrics by system
-    metrics = ["fad", "chroma_mean", "midispec_mean"]
-    sys_mean = df.groupby("system")[metrics].mean()
-    fig, ax = plt.subplots(figsize=(12, 7))
-    sys_mean.sort_values("fad").plot(kind="bar", ax=ax)
-    ax.set_title("Mean Metrics by System")
-    ax.set_ylabel("Metric value")
-    ax.tick_params(axis="x", rotation=30)
-    fig.tight_layout()
-    fig.savefig(outdir / "chart_03_system_means.png", dpi=dpi)
-    plt.close(fig)
-
-    # 04: FAD across trials (log scale)
+    # 03: Trial trajectories for three metrics
     trial_num = df["trial_id"].str.extract(r"(\d+)").astype(int)[0]
-    df_plot = df.copy()
-    df_plot["trial_num"] = trial_num
-    fig, ax = plt.subplots(figsize=(14, 8))
-    sns.lineplot(
-        data=df_plot.sort_values("trial_num"),
-        x="trial_num",
-        y="fad",
-        hue="system",
-        marker="o",
-        ax=ax,
-    )
-    ax.set_title("FAD Across Trials")
-    ax.set_xlabel("Trial Number")
-    ax.set_ylabel("FAD")
-    ax.set_yscale("log")
-    ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left")
+    dplot = df.copy()
+    dplot["trial_num"] = trial_num
+    fig, axes = plt.subplots(1, 3, figsize=(22, 6))
+    for ax, metric in zip(axes, metrics):
+        info = METRICS_INFO[metric]
+        sns.lineplot(
+            data=dplot.sort_values("trial_num"),
+            x="trial_num",
+            y=metric,
+            hue="system",
+            marker="o",
+            ax=ax,
+        )
+        ax.set_title(f"{info['label']} Across Trials")
+        ax.set_xlabel("Trial")
+        if metric == "fad":
+            ax.set_yscale("log")
+        if ax is not axes[-1]:
+            ax.legend_.remove()
+    axes[-1].legend(bbox_to_anchor=(1.02, 1), loc="upper left", title="System")
     fig.tight_layout()
-    fig.savefig(outdir / "chart_04_fad_trial_trends_log.png", dpi=dpi)
+    p = outdir / "chart_03_trial_trajectories.png"
+    fig.savefig(p, dpi=dpi)
+    created.append(p)
     plt.close(fig)
 
-    # 05: Correlation heatmap
+    # 04: Correlation heatmap among metrics
+    corr = df[metrics].corr(method="pearson")
     fig, ax = plt.subplots(figsize=(7, 6))
-    sns.heatmap(
-        pearson_corr,
-        annot=True,
-        fmt=".2f",
-        cmap="coolwarm",
-        center=0,
-        ax=ax,
-        square=True,
-    )
-    ax.set_title("Pearson Correlation Heatmap")
+    sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", center=0, square=True, ax=ax)
+    ax.set_title("Pearson Correlation (3 Metrics)")
     fig.tight_layout()
-    fig.savefig(outdir / "chart_05_correlation_heatmap.png", dpi=dpi)
+    p = outdir / "chart_04_metric_correlation_heatmap.png"
+    fig.savefig(p, dpi=dpi)
+    created.append(p)
     plt.close(fig)
+    return created
 
-    # 06: FAD ranking + 95% CI
-    rank_stats = df.groupby("system")["fad"].agg(["mean", "std", "count"]).sort_values("mean")
-    rank_stats["sem"] = rank_stats["std"] / np.sqrt(rank_stats["count"])
-    rank_stats["ci95"] = 1.96 * rank_stats["sem"]
-    fig, ax = plt.subplots(figsize=(12, 7))
-    ax.bar(
-        rank_stats.index,
-        rank_stats["mean"],
-        yerr=rank_stats["ci95"],
-        capsize=5,
-        color=sns.color_palette("viridis", len(rank_stats)),
-    )
-    ax.set_title("Mean FAD by System with Approx. 95% CI")
-    ax.set_ylabel("FAD (lower better)")
-    ax.tick_params(axis="x", rotation=30)
-    fig.tight_layout()
-    fig.savefig(outdir / "chart_06_fad_ranking_ci.png", dpi=dpi)
-    plt.close(fig)
+
+def save_excel(tables: Dict[str, pd.DataFrame], outpath: Path) -> None:
+    with pd.ExcelWriter(outpath, engine="openpyxl") as writer:
+        for name, table in tables.items():
+            table.to_excel(writer, sheet_name=name[:31], index=False)
 
 
 def main() -> None:
@@ -355,41 +425,53 @@ def main() -> None:
         ],
     )
 
-    required = {"trial_id", "system", "fad", "chroma_mean", "midispec_mean"}
+    required = {"trial_id", "system", *METRICS_INFO.keys()}
     missing = required - set(df.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
 
-    metrics = ["fad", "chroma_mean", "midispec_mean"]
-    table_group_1 = compute_global_tables(df, metrics)
-    table_group_2 = {"vs_anchor_tests": compute_vs_anchor(df)}
-    table_group_3 = compute_inferential(df)
-    table_group_4 = compute_trial_winners(df)
+    summary = metric_system_summary(df)
+    ranking = ranking_by_metric(summary)
+    inferential = inferential_by_metric(df)
+    pairwise_anchor = pairwise_vs_anchor_by_metric(df)
+    winner_tables = winners_by_metric(df)
+    corr_tables = correlation_tables(df)
 
-    all_tables: Dict[str, pd.DataFrame] = {}
-    for group in [table_group_1, table_group_2, table_group_3, table_group_4]:
-        for key, value in group.items():
-            if isinstance(value, pd.DataFrame) and not value.empty:
-                all_tables[key] = value
+    tables: Dict[str, pd.DataFrame] = {
+        "system_metric_summary": summary,
+        "system_metric_ranking": ranking,
+        "inferential_tests_by_metric": inferential,
+        "trial_winners_by_metric": winner_tables["trial_winners_by_metric"],
+        "trial_winner_counts_by_metric": winner_tables["trial_winner_counts_by_metric"],
+        "pearson_corr": corr_tables["pearson_corr"].reset_index(names="metric"),
+        "spearman_corr": corr_tables["spearman_corr"].reset_index(names="metric"),
+    }
+    if not pairwise_anchor.empty:
+        tables["pairwise_vs_anchor_by_metric"] = pairwise_anchor
 
-    for name, table in all_tables.items():
-        table.to_csv(args.outdir / f"{name}.csv", index=True)
+    for name, table in tables.items():
+        table.to_csv(args.outdir / f"{name}.csv", index=False)
 
-    save_excel(all_tables, args.outdir / "objective_stats_summary.xlsx")
-    make_charts(df, table_group_1["pearson_corr"], args.outdir, args.dpi)
+    created_files: List[Path] = [args.outdir / f"{name}.csv" for name in tables]
+    excel_path = args.outdir / "objective_system_comparison_stats.xlsx"
+    save_excel(tables, excel_path)
+    created_files.append(excel_path)
+    created_files.extend(make_charts(df, summary, args.outdir, args.dpi))
 
     print("Analysis complete.")
     print(f"Input: {args.input}")
     print(f"Output directory: {args.outdir}")
     print(f"Rows: {len(df)}, Systems: {df['system'].nunique()}, Trials: {df['trial_id'].nunique()}")
-    print("\nTop systems by mean FAD (lower is better):")
-    print(table_group_1["fad_ranking"].head(7).to_string(index=False))
-    print("\nGenerated:")
-    for p in sorted(args.outdir.glob("*.csv")):
+    print("\nInferential tests (3 metrics):")
+    print(inferential.to_string(index=False))
+    print("\nSystem ranking by metric (top-3 each):")
+    for metric, info in METRICS_INFO.items():
+        top = ranking[ranking["metric"] == metric].head(3)
+        print(f"  {metric} ({info['better']} is better):")
+        print(top[["system", "mean", "rank"]].to_string(index=False))
+    print("\nGenerated files:")
+    for p in sorted(created_files):
         print(f"  - {p}")
-    for p in sorted(args.outdir.glob("*.png")):
-        print(f"  - {p}")
-    print(f"  - {args.outdir / 'objective_stats_summary.xlsx'}")
 
 
 if __name__ == "__main__":
